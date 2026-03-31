@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  test-runner:
+    image: maven:3.9-eclipse-temurin-17
+    working_dir: /workspace
+    volumes:
+      - ./szofttech-test/szofttech-test:/workspace/szofttech-test
+      - ./szofttech-backbone:/workspace/szofttech-backbone
+      - maven-cache:/root/.m2
+
+    command: >
+      /bin/bash -c "
+      echo 'Building PR code...' &&
+      cd /workspace/szofttech-test &&
+      mvn clean install -DskipTests &&
+      echo 'Running Private Tests...' &&
+      cd /workspace/szofttech-bacckbone &&
+      mvn test
+      "
+
+volumes:
+  maven-cache:
