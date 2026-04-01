@@ -1,0 +1,5 @@
+tc3
+exception
+addEdge
+0,-1,6
+invalid input
