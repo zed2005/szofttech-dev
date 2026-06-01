@@ -12,14 +12,11 @@ if [ ! -d "$test_dir" ]; then
 fi
 
 
-#echo "Generating App cache..."
+echo "Generating App cache..."
 
-#java -XX:ArchiveClassesAtExit=app.jsa -jar "$program" < /dev/null > /dev/null || true
+java -XX:ArchiveClassesAtExit=app.jsa -cp "$program" com.szofttech.test.TestWrapper < /dev/null > /dev/null || true
 
-# Run the app for 5 seconds, then send SIGTERM (a graceful shutdown signal)
-#timeout -s SIGTERM 5s java -XX:ArchiveClassesAtExit=app.jsa -jar "$program" || true
-
-#echo "Generated App cache"
+echo "Generated App cache"
 
 mkdir -p "$test_dir/sum" 
 res_file="$test_dir/sum/result.txt"
@@ -37,19 +34,18 @@ for test_file_dir in "$test_dir"/*; do
         continue
     fi
 
-    input_file="$test_file_dir/input.txt"
-    expected_output="$test_file_dir/expected_output.txt"
+    ls "$test_file_dir"
+
+    input_file="$test_file_dir/commands.txt"
+    expected_output="$test_file_dir/expected-output.txt"
     
     if [[ -f "$input_file" && -f "$expected_output" ]]; then
         is_test_successful=true
 
-        #java -XX:SharedArchiveFile=app.jsa -jar "$program" com.szofttech.test.Test < "$input_file" > "$temp_file"
 
-        # The '2>&1' at the end forces Standard Error into Standard Output
-        # The '|| true' prevents the script from crashing if Java throws an error code
-        echo "Running Java with absolute path..."
+        echo "Running Java..."
 
-        java -Xmx256m -cp "/test/app.jar" com.szofttech.test.TestWrapper < "$input_file" > "$temp_file" 2>&1 || true
+        java -XX:SharedArchiveFile=app.jsa -cp "$program" com.szofttech.test.TestWrapper < "$input_file" > "$temp_file"
 
         echo "Java finished."
         
@@ -63,10 +59,19 @@ for test_file_dir in "$test_dir"/*; do
         done < "$expected_output"
 
         if [[ "$is_test_successful" == "true" ]]; then
+            echo "Test passed"
+            
             echo "success!" >> "$res_file"
         else
-            echo "failure!" >> "$res_file"
+            echo "Test failed"
+
+            echo "expected output:\n" >> "$res_file"
+            cat "$expected_output" >> "$res_file"
+            echo "actual output:\n" >> "$res_file"
+            cat "$temp_file" >> "$res_file" 
         fi
+
+        echo "+-----+" >> "$res_file"
     fi
 done
 
