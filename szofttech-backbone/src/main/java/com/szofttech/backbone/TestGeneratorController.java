@@ -27,6 +27,8 @@ public class TestGeneratorController {
         public void actionPerformed(ActionEvent e) {
             try {
                 String description = view.getDescriptionText();
+                String type = view.getTypeText();
+                String part = view.getpartText();
                 String rawCommands = view.getCommandsText();
                 String expectedOutput = view.getExpectedOutputText();
 
@@ -42,7 +44,7 @@ public class TestGeneratorController {
                                                 .collect(Collectors.toList());
 
                 // Call your provided model
-                model.createFunctionTestCase(description, parameters, expectedOutput);
+                model.createFunctionTestCase(description, type, part, parameters, expectedOutput);
 
                 // Notify user and clear form
                 view.showMessage("Test case generated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);

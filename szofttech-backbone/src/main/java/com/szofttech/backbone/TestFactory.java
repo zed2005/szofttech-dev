@@ -53,6 +53,18 @@ public abstract class TestFactory {
         writeIntoFile(new ArrayList<>(List.of(description)), infoFile);
     }
 
+    protected void generateTypeFile(String type, File testDir) {
+        File typeFile = generateFile("type", testDir);
+
+        writeIntoFile(List.of(type), typeFile);
+    }
+
+    protected void generatePartFile(String part, File testDir) {
+        File typeFile = generateFile("part", testDir);
+
+        writeIntoFile(List.of(part), typeFile);
+    }
+
     protected void generateCommandsFile(List<String> commands, File testDir) {
         File commandFile = generateFile("commands", testDir);
 

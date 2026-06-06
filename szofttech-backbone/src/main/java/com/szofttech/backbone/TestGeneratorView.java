@@ -15,6 +15,8 @@ import javax.swing.JTextArea;
 public class TestGeneratorView extends JPanel {
 
     private final JTextArea descriptionArea;
+    private final JTextArea typeArea;
+    private final JTextArea partArea;
     private final JTextArea commandsArea;
     private final JTextArea expectedOutputArea;
     private final JButton generateBtn;
@@ -24,11 +26,19 @@ public class TestGeneratorView extends JPanel {
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         // Create a central panel to hold the text areas
-        JPanel inputPanel = new JPanel(new GridLayout(3, 1, 10, 10));
+        JPanel inputPanel = new JPanel(new GridLayout(4, 1, 10, 10));
 
         // 1. Description Input
         descriptionArea = new JTextArea(4, 30);
         inputPanel.add(createLabeledScrollPane("Description (info.txt):", descriptionArea));
+
+        // 1.5. Type Input
+        typeArea = new JTextArea(4, 30);
+        inputPanel.add(createLabeledScrollPane("Type (happy, sad, edge)", typeArea));
+
+        // 1.5. Type Input
+        partArea = new JTextArea(4, 30);
+        inputPanel.add(createLabeledScrollPane("part (1, 2)", partArea));
 
         // 2. Commands Input
         commandsArea = new JTextArea(4, 30);
@@ -66,6 +76,14 @@ public class TestGeneratorView extends JPanel {
         return descriptionArea.getText();
     }
 
+    public String getTypeText() {
+        return typeArea.getText();
+    }
+
+    public String getpartText() {
+        return partArea.getText();
+    }
+
     public String getCommandsText() {
         return commandsArea.getText();
     }
@@ -87,6 +105,8 @@ public class TestGeneratorView extends JPanel {
     // Clears the inputs after successful generation
     public void clearInputs() {
         descriptionArea.setText("");
+        typeArea.setText("");
+        partArea.setText("");
         commandsArea.setText("");
         expectedOutputArea.setText("");
     }
