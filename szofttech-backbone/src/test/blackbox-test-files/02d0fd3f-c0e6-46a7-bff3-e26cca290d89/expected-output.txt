@@ -1,0 +1,1 @@
+Error: Inambigous edges not allowed!
