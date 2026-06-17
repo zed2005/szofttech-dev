@@ -1,8 +1,8 @@
 FROM maven:3.9.15-eclipse-temurin-21-alpine AS builder
 WORKDIR /build
 
-COPY szofttech-test/szofttech-test/pom.xml .
-COPY szofttech-test/szofttech-test/src ./src
+COPY ./entry/szofttech-test/pom.xml .
+COPY ./entry/szofttech-test/src ./src
 
 #RUN useradd uBuild
 #USER uBuild

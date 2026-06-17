@@ -18,11 +18,11 @@ rm -rf "$results_dir"
 mkdir -p "$target_dir"
 mkdir -p "$results_dir"
 
-ls
+
 echo "Copying files..."
 cp -r "$src_dir"/. "$target_dir"/
 
-
+ls $target_dir
 echo "Building docker instance..."
 docker build --tag "run_tests" .
 
