@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+cd "$(dirname "$0")"
+
 src_dir="$1"
 target_dir="./entry"
 results_dir="./results" 
