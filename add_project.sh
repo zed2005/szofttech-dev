@@ -20,6 +20,7 @@ mkdir -p "$results_dir"
 echo "Copying files..."
 cp -r "$src_dir"/. "$target_dir"/
 
+ls
 echo "Building docker instance..."
 docker build --tag "run_tests" .
 
