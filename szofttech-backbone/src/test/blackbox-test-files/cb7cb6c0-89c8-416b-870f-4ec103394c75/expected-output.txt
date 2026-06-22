@@ -1,0 +1,2 @@
+Added edge: A -> B (Weight: 10)
+Added edge: B -> A (Weight: 10)

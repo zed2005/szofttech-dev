@@ -59,10 +59,10 @@ public abstract class TestFactory {
         writeIntoFile(List.of(type), typeFile);
     }
 
-    protected void generatePartFile(String part, File testDir) {
+    protected void generatePartFile(Integer part, File testDir) {
         File typeFile = generateFile("part", testDir);
 
-        writeIntoFile(List.of(part), typeFile);
+        writeIntoFile(List.of(part.toString()), typeFile);
     }
 
     protected void generateCommandsFile(List<String> commands, File testDir) {

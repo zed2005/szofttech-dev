@@ -27,8 +27,8 @@ public class TestGeneratorController {
         public void actionPerformed(ActionEvent e) {
             try {
                 String description = view.getDescriptionText();
-                String type = view.getTypeText();
-                String part = view.getpartText();
+                String type = view.getType();
+                Integer part = view.getPart();
                 String rawCommands = view.getCommandsText();
                 String expectedOutput = view.getExpectedOutputText();
 
