@@ -1,0 +1,2 @@
+Edge weighhts between nodes A and B:
+Weight: 15

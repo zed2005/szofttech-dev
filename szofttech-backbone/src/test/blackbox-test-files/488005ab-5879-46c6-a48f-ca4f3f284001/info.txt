@@ -1,0 +1,1 @@
+Normalize edges between two nodes

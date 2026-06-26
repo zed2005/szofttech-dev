@@ -26,6 +26,8 @@ sum_arr=(0 0 0 0 0 0)
 first_expected=("" "" "" "" "" "")
 first_actual=("" "" "" "" "" "")
 
+declare -a all_test_names
+
 echo "Creating result file..."
 > "$res_file" 
 echo "Created result file."
@@ -36,6 +38,7 @@ for test_file_dir in "$test_dir"/*; do
         continue
     fi
 
+    info_file="$test_file_dir/info.txt"
     type_file="$test_file_dir/type.txt"
     part_file="$test_file_dir/part.txt"
     input_file="$test_file_dir/commands.txt"
@@ -82,8 +85,8 @@ for test_file_dir in "$test_dir"/*; do
             ((succesful_arr[arr_idx]++))
         else
             echo "Test failed"
+            all_test_names[arr_idx]+=$(cat "$info_file")
 
-            # Capture the FIRST failure expected/actual output
             if [ -z "${first_expected[arr_idx]}" ]; then
                 first_expected[arr_idx]=$(cat "$expected_output")
                 first_actual[arr_idx]=$(cat "$temp_file")
@@ -110,6 +113,7 @@ generate_subcat() {
     local tot=${sum_arr[$idx]}
     local exp="${first_expected[$idx]}"
     local act="${first_actual[$idx]}"
+    local failed_list="${all_test_names[$idx]}"
 
     local icon="❌"
     local body=""
@@ -122,20 +126,25 @@ generate_subcat() {
         icon="✅"
         body="> *All tests passed successfully!*"
     else
-        # If tests failed, we inject the expected/actual into a code block
-        body="\`\`\`text
+        # Match the sketch: Expected/Actual block FIRST, then the list of Failed Tests
+        body="**First Failure Details:**
+\`\`\`text
 Expected output:
 $exp
 
 Actual output:
 $act
-\`\`\`"
+\`\`\`
+
+**Other Failed Tests:**
+$failed_list"
     fi
 
     # Append this subcategory as an HTML <details> block using Here-Doc
     cat << EOF >> "$res_file"
   <details>
   <summary><b>$title</b> &nbsp; | &nbsp; $succ/$tot &nbsp; $icon</summary>
+<br>
 
 $body
 

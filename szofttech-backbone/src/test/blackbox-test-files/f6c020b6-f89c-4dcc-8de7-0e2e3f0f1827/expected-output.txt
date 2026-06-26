@@ -1,0 +1,1 @@
+Only one edge can not be normnalized!

@@ -1,0 +1,1 @@
+Normalizing only one edge exception
